@@ -10,13 +10,13 @@ if ( ! defined('ABSPATH')) exit; // if direct access
 
 if(!empty($_POST['ssb_hidden'])) {
 
-    $nonce = sanitize_text_field($_POST['_wpnonce']);
+    $nonce = isset($_POST['_wpnonce']) ? sanitize_text_field(wp_unslash($_POST['_wpnonce'])) : '';
     if(wp_verify_nonce( $nonce, 'ssb_nonce' ) && $_POST['ssb_hidden'] == 'Y') {
         //if($_POST['ssb_hidden'] == 'Y') {
         //Form data sent
 
 
-        $social_share_button_settings = social_share_button_sanitize_arr($_POST['social_share_button_settings']);
+        $social_share_button_settings = isset($_POST['social_share_button_settings']) ? social_share_button_sanitize_arr(wp_unslash($_POST['social_share_button_settings'])) : '';
         update_option('social_share_button_settings', $social_share_button_settings);
 
 
@@ -100,8 +100,8 @@ array_multisort($tabs_sorted, SORT_ASC, $ssb_settings_tabs);
 
 <div class="wrap">
 
-	<div id="icon-tools" class="icon32"><br></div><?php echo "<h2>".sprintf(__('%s - Settings', 'social-share-button'), 'Social Share Button' )."</h2>";?>
-		<form  method="post" action="<?php echo str_replace( '%7E', '~', esc_url_raw($_SERVER['REQUEST_URI'])); ?>">
+	<div id="icon-tools" class="icon32"><br></div><?php echo "<h2>Social Share Button Settings</h2>";?>
+		<form  method="post" action="<?php echo esc_url(str_replace( '%7E', '~', isset($_SERVER['REQUEST_URI']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])) : '')); ?>">
 	    <input type="hidden" name="ssb_hidden" value="Y">
 
 
@@ -116,7 +116,7 @@ array_multisort($tabs_sorted, SORT_ASC, $ssb_settings_tabs);
                         $data_visible = isset($tab['data_visible']) ? $tab['data_visible'] : '';
                         $hidden = isset($tab['hidden']) ? $tab['hidden'] : false;
                         ?>
-                        <li <?php if(!empty($data_visible)):  ?> data_visible="<?php echo $data_visible; ?>" <?php endif; ?> class="tab-nav <?php if($hidden) echo 'hidden';?> <?php if($active) echo 'active';?>" data-id="<?php echo $id; ?>"><?php echo $title; ?></li>
+                        <li <?php if(!empty($data_visible)):  ?> data_visible="<?php echo esc_attr($data_visible); ?>" <?php endif; ?> class="tab-nav <?php if($hidden) echo 'hidden';?> <?php if($active) echo 'active';?>" data-id="<?php echo esc_attr($id); ?>"><?php echo wp_kses_post($title); ?></li>
                         <?php
                     }
                     ?>
@@ -130,7 +130,7 @@ array_multisort($tabs_sorted, SORT_ASC, $ssb_settings_tabs);
 
                     ?>
 
-                    <div class="tab-content <?php if($active) echo 'active';?>" id="<?php echo $id; ?>">
+                    <div class="tab-content <?php if($active) echo 'active';?>" id="<?php echo esc_attr($id); ?>">
                         <?php
                         do_action('ssb_settings_tabs_content_'.$id, $tab);
                         ?>
@@ -147,7 +147,7 @@ array_multisort($tabs_sorted, SORT_ASC, $ssb_settings_tabs);
 
             <p class="submit">
                 <?php wp_nonce_field( 'ssb_nonce' ); ?>
-                <input class="button button-primary" type="submit" name="Submit" value="<?php echo __('Save Changes', 'social-share-button' ) ?>" />
+                <input class="button button-primary" type="submit" name="Submit" value="<?php echo esc_html__('Save Changes', 'social-share-button' ) ?>" />
             </p>
 		</form>
 

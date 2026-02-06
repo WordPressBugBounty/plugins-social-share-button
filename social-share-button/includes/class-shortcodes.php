@@ -23,11 +23,9 @@ class class_social_share_button_shortcodes{
 
         $social_share_button_settings = get_option( 'social_share_button_settings' );
         $theme = $social_share_button_settings['theme'];
-        $custom_css = $social_share_button_settings['custom_css'];
         $themes = $theme;
 
 
-        //$themes = $_GET['themes'];
 
 
         $class_social_share_button_functions = new class_social_share_button_functions();
@@ -41,12 +39,10 @@ class class_social_share_button_shortcodes{
 
         include $social_share_button_themes_dir[$themes].'/index.php';
 
-        echo $html;
+        echo wp_kses_post($html);
 
 
-        ?>
-        <style type="text/css"><?php echo $custom_css; ?></style>
-        <?php
+  
 
         return ob_get_clean();
 

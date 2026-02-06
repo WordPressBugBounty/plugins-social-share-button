@@ -1,9 +1,6 @@
 <?php
 
-/*
-* @Author 		ParaTheme
-* Copyright: 	2015 ParaTheme
-*/
+
 
 if ( ! defined('ABSPATH')) exit;  // if direct access 
 
@@ -11,8 +8,8 @@ class class_social_share_button_migrate{
 	
     public function __construct(){
 
-	    add_action('admin_notices', array($this, 'migrate_admin_notices'));
-        add_action('admin_notices', array($this, 'migrate_admin_notices_settings'));
+	    //add_action('admin_notices', array($this, 'migrate_admin_notices'));
+        //add_action('admin_notices', array($this, 'migrate_admin_notices_settings'));
 
    		}
 
@@ -28,7 +25,7 @@ class class_social_share_button_migrate{
 
 		if($social_share_button_migrate_2_1_1!='done'):
 		?>
-		<div class="update-nag"><strong>Social Share Button</strong> plugin need to <a href="<?php echo admin_url().'admin.php?page=social_share_button_migrate&_wpnonce='.$nonce; ?>">update data</a>
+		<div class="update-nag"><strong>Social Share Button</strong> plugin need to <a href="<?php echo esc_url(admin_url().'admin.php?page=social_share_button_migrate&_wpnonce='.$nonce); ?>">update data</a>
 
 
 		</div>
@@ -49,7 +46,7 @@ class class_social_share_button_migrate{
 
         if($social_share_button_migrate_2_1_6!='done'):
             ?>
-            <div class="update-nag"><strong>Social Share Button</strong> plugin need to <a href="<?php echo admin_url().'admin.php?page=social_share_button_migrate_settings&_wpnonce='.$nonce; ?>">update settings</a>
+            <div class="update-nag"><strong>Social Share Button</strong> plugin need to <a href="<?php echo esc_url(admin_url().'admin.php?page=social_share_button_migrate_settings&_wpnonce='.$nonce); ?>">update settings</a>
 
 
             </div>

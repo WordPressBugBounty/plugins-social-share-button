@@ -30,9 +30,7 @@ $social_share_button_more_display = $display_more_button;
 $social_share_button_total = $max_button_count;
 $social_share_button_count_format = $count_format;
 
-//var_dump($share_count);
 
-//$social_share_button_total = $_GET['total'];
 
 if(empty($social_share_button_sites)){
 

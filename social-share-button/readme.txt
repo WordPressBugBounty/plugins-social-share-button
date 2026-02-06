@@ -1,10 +1,10 @@
 ===  Social Share Button ===
 	Contributors: pickplugins
 	Donate link: http://pickplugins.com
-	Tags: Share, social share buttons, social share button, share button, social share, social share plugin, share plugin, social share plugin wordpress, Social Media Plugins, Social Media share
+	Tags: social share buttons, social share button, share button, social share, social share plugin
 	Requires at least: 4.1
-	Tested up to: 6.2
-	Stable tag: 2.1.12
+	Tested up to: 6.9
+	Stable tag: 2.1.14
 	License: GPLv2 or later
 	License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ Anyone can contribute on translation for Social Share Button, please see the def
 
 
 == Changelog ==
+
+= 2.1.14 =
+* 2026-01-10 - fix - nonce issue fixed.
 
 = 2.1.12 =
 * 2020-08-20 - fix - eval code removed

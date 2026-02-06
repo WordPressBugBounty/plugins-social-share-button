@@ -8,11 +8,17 @@ if($social_share_button_count_format=='short'){
 }
 
 
-$html_popup_buttons.= '<a target="_blank" href="'.$url.'" post-id="'.get_the_ID().'" class="share-button share-button-'.get_the_ID().' '.$site_info['id'].'" id="'.$site_info['id'].'" >';
 
-$html_popup_buttons.= '<span class="button-icon">'.$site_info['icon'].'</i>
-</span>';
-$html_popup_buttons.= '<span class="button-name">'.$site_info['title'].'</span>';
-$html_popup_buttons.= '<span class="button-count">'.$share_count_value.'</span>';				
+ob_start();
 
-$html_popup_buttons.= '</a>';
+?>
+<a target="_blank" href="<?php echo esc_url($url); ?>" post-id="<?php echo esc_attr(get_the_ID()); ?>" class="share-button share-button-<?php echo esc_attr(get_the_ID()); ?> <?php echo esc_attr($site_info['id']); ?>" id="<?php echo esc_attr($site_info['id']); ?>" >
+
+<span class="button-icon"><?php echo wp_kses_post($site_info['icon']); ?></span>
+<span class="button-name"><?php echo wp_kses_post($site_info['title']); ?></span>
+<span class="button-count"><?php echo wp_kses_post($share_count_value); ?></span>				
+
+</a>
+<?php 
+
+$html_popup_buttons .= ob_get_clean();

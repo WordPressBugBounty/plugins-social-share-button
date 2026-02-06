@@ -1,7 +1,7 @@
 <?php	
 if ( ! defined('ABSPATH')) exit;  // if direct access
 
-$nonce = sanitize_text_field($_GET['_wpnonce']);
+$nonce = isset($_GET['_wpnonce']) ? sanitize_text_field(wp_unslash($_GET['_wpnonce'])) : '';
 
 
 
@@ -14,7 +14,7 @@ $nonce = sanitize_text_field($_GET['_wpnonce']);
 
 <div class="wrap">
 
-	<div id="icon-tools" class="icon32"><br><?php echo "<h2>".social_share_button_plugin_name.' '.__('Migrate', 'social-share-button')."</h2>";?></div>
+	<div id="icon-tools" class="icon32"><br><?php echo "<h2>".esc_html__('Social Share Button Migrate', 'social-share-button')."</h2>";?></div>
 
     <?php
     if(wp_verify_nonce( $nonce, 'nonce_social_share_button' )):
@@ -71,7 +71,7 @@ $nonce = sanitize_text_field($_GET['_wpnonce']);
         echo '<ul>';
 	    while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
-            echo '<li><i class="fa fa-check-square" aria-hidden="true"></i> '.get_the_title().'</li>';
+            echo '<li><i class="fa fa-check-square" aria-hidden="true"></i> '.esc_html(get_the_title()).'</li>';
 		    $ssb_post_sites = get_post_meta(get_the_ID(),'ssb_post_sites', true);
 
 		    foreach ($ssb_post_sites as $key=>$ssb_post_site){

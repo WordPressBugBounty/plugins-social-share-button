@@ -1,9 +1,6 @@
 <?php
 
-/*
-* @Author 		ParaTheme
-* Copyright: 	2015 ParaTheme
-*/
+
 
 if ( ! defined('ABSPATH')) exit;  // if direct access
 
@@ -18,7 +15,7 @@ include social_share_button_plugin_dir.'/templates/variables.php';
 
 
 
-	$html.= '<div id="wp-share-button-'.$post_id.'" class="wp-share-button '.$themes.'">';
+	$html.= '<div id="wp-share-button-'.esc_attr($post_id).'" class="wp-share-button '.esc_attr($themes).'">';
 
 	$html.= apply_filters('social_share_button_filter_buttons_before','');
 	
@@ -45,13 +42,7 @@ include social_share_button_plugin_dir.'/templates/variables.php';
 			
 				include social_share_button_plugin_dir.'/templates/buttons.php';
 				
-				// $html_button.= '<a target="_blank" href="'.$url.'" post-id="'.get_the_ID().'" class="share-button share-button-'.get_the_ID().' '.$site_info['id'].'" id="'.$site_info['id'].'" >';		
-				
-				// $html_button.= '<span class="button-icon"><i class="fa fa-'.$site_info['icon'].'"></i></span>';
-				// $html_button.= '<span class="button-name">'.$site_info['title'].'</span>';
-				// $html_button.= '<span class="button-count">'.$share_count_value.'</span>';
-				
-				// $html_button.= '</a>';
+
 				
 				
 				
@@ -62,14 +53,7 @@ include social_share_button_plugin_dir.'/templates/variables.php';
 					
 					
 					
-					// $html_popup_buttons.= '<a target="_blank" href="'.$url.'" post-id="'.get_the_ID().'" class="share-button share-button-'.get_the_ID().' '.$site_info['id'].'" id="'.$site_info['id'].'" >';		
-					
-					// $html_popup_buttons.= '<span class="button-icon"><i class="fa fa-'.$site_info['icon'].'"></i>
-					// </span>';			
-					// $html_popup_buttons.= '<span class="button-name">'.$site_info['title'].'</span>';			
-					// $html_popup_buttons.= '<span class="button-count">'.$share_count_value.'</span>';				
-					
-					// $html_popup_buttons.= '</a>';
+
 					
 					
 				}
@@ -84,7 +68,7 @@ include social_share_button_plugin_dir.'/templates/variables.php';
 			
 			//include social_share_button_plugin_dir.'/templates/more.php';
 			
-			$html_more_button.= '<a title="More..." href="#wp-share-button-'.$post_id.'" post-id="'.get_the_ID().'" class="share-button-more" >';
+			$html_more_button.= '<a title="More..." href="#wp-share-button-'.esc_attr($post_id).'" post-id="'.esc_attr(get_the_ID()).'" class="share-button-more" >';
 			$html_more_button.= '<span class="button-icon"><i class="fa fa-plus"></i></span>';
 			$html_more_button.= '</a>';
 			
@@ -93,6 +77,6 @@ include social_share_button_plugin_dir.'/templates/variables.php';
 
 	$html.= $html_button;
 	$html.= $html_more_button;	
-	$html.= '<div class="wp-share-button-popup wp-share-button-popup-'.get_the_ID().'"><div class="popup-buttons"><span class="close">X</span>'.$html_popup_buttons.'</div></div>';	
+	$html.= '<div class="wp-share-button-popup wp-share-button-popup-'.esc_attr(get_the_ID()).'"><div class="popup-buttons"><span class="close">X</span>'.wp_kses_post($html_popup_buttons).'</div></div>';	
 
 	$html.= '</div>';

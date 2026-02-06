@@ -3,7 +3,7 @@
 Plugin Name: Social Share Button
 Plugin URI: http://pickplugins.com
 Description: Awesome Share Button.
-Version: 2.1.12
+Version: 2.1.14
 Author: PickPlugins
 Author URI: http://pickplugins.com
 Text Domain: social-share-button
@@ -20,8 +20,12 @@ class SocialShareButton{
 		
 		define('social_share_button_plugin_url', plugins_url('/', __FILE__)  );
 		define('social_share_button_plugin_dir', plugin_dir_path( __FILE__ ) );
-		define('social_share_button_plugin_name', __('Social Share Button', 'social-share-button') );
-		define('social_share_button_plugin_version', '2.1.12' );
+		define('social_share_button_plugin_name', "Social Share Button" );
+		define('social_share_button_plugin_version', '2.1.14' );
+
+
+$socialShareButtonCss = '';
+global $socialShareButtonCss;
 
 
 		// Class
@@ -84,14 +88,12 @@ class SocialShareButton{
 		wp_enqueue_script('jquery');
 		//wp_enqueue_script('jquery-ui-datepicker');
 		
-		wp_enqueue_script('social_share_button_front_js', plugins_url( 'assets/front/js/scripts.js' , __FILE__ ) , array( 'jquery' ));
+		wp_enqueue_script('social_share_button_front_js', plugins_url( 'assets/front/js/scripts.js' , __FILE__ ) , array( 'jquery' ),'1.0.0');
 		wp_localize_script('social_share_button_front_js', 'social_share_button_ajax', array( 'social_share_button_ajaxurl' => admin_url( 'admin-ajax.php')));
 		
 		
-		wp_enqueue_style('social_share_button_style', social_share_button_plugin_url.'assets/front/css/style.css');
-        //wp_enqueue_style('font-awesome-4', social_share_button_plugin_url.'assets/global/css/font-awesome.css');
-        wp_enqueue_style('fontawesome-5', social_share_button_plugin_url.'assets/global/css/fontawesome-5.min.css');
-		//wp_enqueue_style('jquery-ui', social_share_button_plugin_url.'admin/css/jquery-ui.css');
+		wp_enqueue_style('social_share_button_style', social_share_button_plugin_url.'assets/front/css/style.css',[],'1.0.0');
+        wp_enqueue_style('fontawesome-5', social_share_button_plugin_url.'assets/global/css/fontawesome-5.min.css',[],'5.0.0');
 
 		}
 
@@ -103,16 +105,16 @@ class SocialShareButton{
         //var_dump($screen);
 
 
-        wp_register_style('font-awesome-4', social_share_button_plugin_url.'assets/global/css/font-awesome.css');
-        wp_register_style('font-awesome-5', social_share_button_plugin_url.'assets/global/css/fontawesome-5.min.css');
+        wp_register_style('font-awesome-4', social_share_button_plugin_url.'assets/global/css/font-awesome.css',[],'4.0.0');
+        wp_register_style('font-awesome-5', social_share_button_plugin_url.'assets/global/css/fontawesome-5.min.css',[],'5.0.0');
 
-        wp_register_script('select2', social_share_button_plugin_url.'assets/admin/js/select2.full.js', array('jquery'));
-        wp_register_style(  'select2', social_share_button_plugin_url . 'assets/admin/css/select2.min.css');
-        wp_register_script('jquery.lazy', social_share_button_plugin_url.'assets/admin/js/jquery.lazy.min.js', array('jquery'));
+        wp_register_script('select2', social_share_button_plugin_url.'assets/admin/js/select2.full.js', array('jquery'),'4.0.0');
+        wp_register_style(  'select2', social_share_button_plugin_url . 'assets/admin/css/select2.min.css',[],'4.0.0');
+        wp_register_script('jquery.lazy', social_share_button_plugin_url.'assets/admin/js/jquery.lazy.min.js', array('jquery'),'1.0.0');
 
 
-        wp_register_style('settings-tabs', social_share_button_plugin_url.'assets/settings-tabs/settings-tabs.css');
-        wp_register_script('settings-tabs', social_share_button_plugin_url. 'assets/settings-tabs/settings-tabs.js', array( 'jquery' ));
+        wp_register_style('settings-tabs', social_share_button_plugin_url.'assets/settings-tabs/settings-tabs.css',[],'1.0.0');
+        wp_register_script('settings-tabs', social_share_button_plugin_url. 'assets/settings-tabs/settings-tabs.js', array( 'jquery' ),'1.0.0');
 
         if ($screen->id == 'toplevel_page_social-share-button'){
 

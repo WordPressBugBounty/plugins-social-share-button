@@ -1,8 +1,5 @@
 <?php
-/*
-* @Author 		ParaTheme
-* Copyright: 	2015 ParaTheme
-*/
+
 if ( ! defined('ABSPATH')) exit;  // if direct access 
 
 
@@ -129,7 +126,7 @@ add_filter('social_share_button_filter_buttons_before','social_share_button_filt
 		
 
 		
-		echo $data;
+		echo wp_kses_post($data);
 		
 		
 		}
@@ -317,8 +314,18 @@ function social_share_button_display_on_excerpt($excerpt){
 
 
 function social_share_button_ajax_update_count(){
-		$current_site_id = sanitize_text_field($_POST['site_id']);
-		$post_id = (int)$_POST['post_id'];
+
+		$nonce = sanitize_text_field(wp_unslash($_POST['nonce']));
+
+
+        if (wp_verify_nonce($nonce, 'social_share_button_nonce')) {
+
+            die();
+        }
+
+
+		$current_site_id = isset($_POST['site_id']) ? sanitize_text_field(wp_unslash($_POST['site_id'])) : '';
+		$post_id = isset($_POST['post_id']) ? (int)sanitize_text_field(wp_unslash($_POST['post_id'])) : '';
 		
 		$social_share_button_sites = get_option( 'social_share_button_sites' );
 		$share_count = get_post_meta( $post_id, 'social_share_button_share_count', true );
@@ -350,4 +357,28 @@ function social_share_button_ajax_update_count(){
 add_action('wp_ajax_social_share_button_ajax_update_count', 'social_share_button_ajax_update_count');
 add_action('wp_ajax_nopriv_social_share_button_ajax_update_count', 'social_share_button_ajax_update_count');
 	
+
+
+function social_share_button_inline_css() {
+
+global $socialShareButtonCss;
+
+
+
+    if ( empty( $socialShareButtonCss ) ) {
+        return;
+    }
+
+        $social_share_button_settings = get_option( 'social_share_button_settings' );
+        $custom_css = isset($social_share_button_settings['custom_css']) ? $social_share_button_settings['custom_css'] : '';
+
+
+    wp_register_style( 'social-share-button-style', false );
+    wp_enqueue_style( 'social-share-button-style' );
+
+$socialShareButtonCss = $custom_css;
+
+    wp_add_inline_style( 'social-share-button-style', $socialShareButtonCss );
+}
+add_action( 'wp_footer', 'social_share_button_inline_css' );
 

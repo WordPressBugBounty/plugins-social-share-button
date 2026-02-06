@@ -19,4 +19,4 @@ $count = $share_count_value;
 
 
 
-$html_first.= '<span class="button-count">'.$share_count_value.'</span>';
+$html_first.= '<span class="button-count">'.esc_html($share_count_value).'</span>';

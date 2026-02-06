@@ -11,11 +11,11 @@ function ssb_settings_tabs_content_options(){
 
     $social_share_button_settings = get_option( 'social_share_button_settings' );
 
-    $max_button_count = $social_share_button_settings['max_button_count'];
-    $display_more_button = $social_share_button_settings['display_more_button'];
-    $display_total_count = $social_share_button_settings['display_total_count'];
-    $count_format = $social_share_button_settings['count_format'];
-    $sharing_media = $social_share_button_settings['sharing_media'];
+    $max_button_count = isset($social_share_button_settings['max_button_count']) ? $social_share_button_settings['max_button_count'] : 4;
+    $display_more_button = isset($social_share_button_settings['display_more_button']) ? $social_share_button_settings['display_more_button'] : 'no';
+    $display_total_count = isset($social_share_button_settings['display_total_count']) ? $social_share_button_settings['display_total_count'] : 'no';
+    $count_format = isset($social_share_button_settings['count_format']) ? $social_share_button_settings['count_format'] : 'full';
+    $sharing_media = isset($social_share_button_settings['sharing_media']) ? $social_share_button_settings['sharing_media'] : array();
 
     if(empty($sharing_media)) {
         $class_social_share_button_functions = new class_social_share_button_functions();
@@ -230,7 +230,7 @@ function ssb_settings_tabs_content_style(){
     $settings_tabs_field = new settings_tabs_field();
     $social_share_button_settings = get_option( 'social_share_button_settings' );
 
-    $theme = $social_share_button_settings['theme'];
+    $theme = isset($social_share_button_settings['theme']) ? $social_share_button_settings['theme'] : '';
 
 
 
@@ -410,7 +410,7 @@ function ssb_settings_tabs_content_display(){
                     ?>
                     <div class="item template <?php //echo $post_type; ?>">
                         <div class="header">
-                                <span title="<?php echo __('Click to expand', 'job-board-manager'); ?>" class="expand ">
+                                <span title="<?php echo esc_html__('Click to expand', 'social-share-button'); ?>" class="expand ">
                                     <i class="fa fa-expand"></i>
                                     <i class="fa fa-compress"></i>
                                 </span>
@@ -418,13 +418,13 @@ function ssb_settings_tabs_content_display(){
                             <?php
                             if($enable =='yes'):
                                 ?>
-                                <span title="<?php echo __('Enable', 'job-board-manager'); ?>" class="is-enable ">
+                                <span title="<?php echo esc_html__('Enable', 'social-share-button'); ?>" class="is-enable ">
                                         <i class="fa fa-check-square"></i>
                                     </span>
                             <?php
                             else:
                                 ?>
-                                <span title="<?php echo __('Disabled', 'job-board-manager'); ?>" class="is-enable ">
+                                <span title="<?php echo esc_html__('Disabled', 'social-share-button'); ?>" class="is-enable ">
                                     <i class="fa fa-times-circle"></i>
                                     </span>
                             <?php
@@ -432,19 +432,20 @@ function ssb_settings_tabs_content_display(){
                             ?>
 
 
-                            <?php echo $post_name; ?>
+                            <?php echo esc_html($post_name); ?>
                         </div>
                         <input type="hidden" name="wishlist_settings[post_types_display][<?php echo esc_attr($post_type); ?>][name]" value="<?php echo esc_attr($post_type); ?>" />
                         <div class="options">
-                            <div class="description"><?php echo $description; ?></div><br/><br/>
+                            <div class="description"><?php echo esc_html($description); ?></div><br/><br/>
 
                             <?php
 
                             $args = array(
                                 'id'		=> 'enable',
                                 'parent'		=> 'social_share_button_settings[post_types_display]['.$post_type.']',
-                                'title'		=> __('Enable?','related-post'),
-                                'details'	=> sprintf(__('Enable or disable related post automatically for %s.','related-post'), $post_type),
+                                'title'		=> esc_html__('Enable?','social-share-button'),
+/* translators: Post Type name */
+                                'details'	=> sprintf(esc_html__('Enable or disable related post automatically for %s.','social-share-button'), $post_type),
                                 'type'		=> 'select',
                                 'value'		=> $enable,
                                 'default'		=> 'no',
@@ -459,8 +460,8 @@ function ssb_settings_tabs_content_display(){
                             $args = array(
                                 'id'		=> 'content_position',
                                 'parent'		=> 'social_share_button_settings[post_types_display]['.$post_type.']',
-                                'title'		=> __('Content positions','related-post'),
-                                'details'	=> __('Display before or after content.','related-post'),
+                                'title'		=> __('Content positions','social-share-button'),
+                                'details'	=> __('Display before or after content.','social-share-button'),
                                 'type'		=> 'checkbox',
                                 'value'		=> $content_position,
                                 'default'		=> array(),
@@ -474,8 +475,8 @@ function ssb_settings_tabs_content_display(){
                             $args = array(
                                 'id'		=> 'excerpt_position',
                                 'parent'		=> 'social_share_button_settings[post_types_display]['.$post_type.']',
-                                'title'		=> __('Excerpt positions','related-post'),
-                                'details'	=> __('Display before or after excerpt.','related-post'),
+                                'title'		=> __('Excerpt positions','social-share-button'),
+                                'details'	=> __('Display before or after excerpt.','social-share-button'),
                                 'type'		=> 'checkbox',
                                 'value'		=> $excerpt_position,
                                 'default'		=> array(),
@@ -492,8 +493,8 @@ function ssb_settings_tabs_content_display(){
                             $args = array(
                                 'id'		=> 'paragraph_positions',
                                 'parent'		=> 'social_share_button_settings[post_types_display]['.$post_type.']',
-                                'title'		=> __('Paragraph positions','related-post'),
-                                'details'	=> __('Display related post after n\'th paragraph. N is total paragraph count, use comma to separate.','related-post'),
+                                'title'		=> __('Paragraph positions','social-share-button'),
+                                'details'	=> __('Display related post after n\'th paragraph. N is total paragraph count, use comma to separate.','social-share-button'),
                                 'type'		=> 'text',
                                 'value'		=> $paragraph_positions,
                                 'default'		=> '',
@@ -507,8 +508,8 @@ function ssb_settings_tabs_content_display(){
                             $args = array(
                                 'id'		=> 'headline_text',
                                 'parent'		=> 'social_share_button_settings[post_types_display]['.$post_type.']',
-                                'title'		=> __('Headline text','related-post'),
-                                'details'	=> __('Custom text for related post headline..','related-post'),
+                                'title'		=> __('Headline text','social-share-button'),
+                                'details'	=> __('Custom text for related post headline..','social-share-button'),
                                 'type'		=> 'text',
                                 'value'		=> $headline_text,
                                 'default'		=> '',
@@ -544,8 +545,8 @@ function ssb_settings_tabs_content_display(){
         $args = array(
             'id'		=> 'post_types',
             //'parent'		=> '',
-            'title'		=> __('Post types display','job-board-manager'),
-            'details'	=> __('Display automatically wishlist under following post types content and excerpt.','job-board-manager'),
+            'title'		=> __('Post types display','social-share-button'),
+            'details'	=> __('Display automatically wishlist under following post types content and excerpt.','social-share-button'),
             'type'		=> 'custom_html',
             //'multiple'		=> true,
             'html'		=> $html,
@@ -605,28 +606,7 @@ function ssb_settings_tabs_content_shortcode(){
 
 
 
-        <style type="text/css">
-             .copy-to-clipboard {
-            }
-
-             .copy-to-clipboard .copied {
-                display: none;
-                background: #e5e5e5;
-                padding: 4px 10px;
-                line-height: normal;
-            }
-        </style>
-
-        <script>
-            jQuery(document).ready(function ($) {
-                $(document).on('click', '.copy-to-clipboard input, .copy-to-clipboard textarea', function () {
-                    $(this).focus();
-                    $(this).select();
-                    document.execCommand('copy');
-                    $(this).parent().children('.copied').fadeIn().fadeOut(2000);
-                })
-            })
-        </script>
+       
         <?php
         $html = ob_get_clean();
         $args = array(
@@ -648,7 +628,7 @@ function ssb_settings_tabs_content_shortcode(){
 
 
         <div class="">
-            <video autoplay="" loop="" class="" style="max-width: 100%; min-height: 505px;"><source type="video/mp4" src="<?php echo social_share_button_plugin_url.'assets/admin/images/tBpP1jl.mp4'; ?>"></video>
+            <video autoplay="" loop="" class="" style="max-width: 100%; min-height: 505px;"><source type="video/mp4" src="<?php echo esc_url(social_share_button_plugin_url.'assets/admin/images/tBpP1jl.mp4'); ?>"></video>
         </div>
 
 
@@ -678,6 +658,29 @@ function ssb_settings_tabs_content_shortcode(){
 
         ?>
     </div>
+
+ <style type="text/css">
+             .copy-to-clipboard {
+            }
+
+             .copy-to-clipboard .copied {
+                display: none;
+                background: #e5e5e5;
+                padding: 4px 10px;
+                line-height: normal;
+            }
+        </style>
+
+        <script>
+            jQuery(document).ready(function ($) {
+                $(document).on('click', '.copy-to-clipboard input, .copy-to-clipboard textarea', function () {
+                    $(this).focus();
+                    $(this).select();
+                    document.execCommand('copy');
+                    $(this).parent().children('.copied').fadeIn().fadeOut(2000);
+                })
+            })
+        </script>
     <?php
 
 }
@@ -693,7 +696,7 @@ function ssb_settings_tabs_content_custom_scripts(){
 
     $social_share_button_settings = get_option( 'social_share_button_settings' );
 
-    $custom_css = $social_share_button_settings['custom_css'];
+    $custom_css = isset($social_share_button_settings['custom_css']) ? $social_share_button_settings['custom_css'] : '';
 
     ?>
     <div class="section">
@@ -790,7 +793,7 @@ function ssb_settings_tabs_content_help_support(){
 
         <h3>Provide your feedback</h3>
 
-        <a class="button" href="https://wordpress.org/support/plugin/social-share-button/reviews/?filter=5" target="_blank">Submit Reviews</a> <a class="button" href="https://wordpress.org/support/plugin/social-share-button/#new-topic-0" target="_blank">Ask wordpress.org</a><p>We spent thousand+ hours to development on this plugin, please submit your reviews wisely.</p><p>If you have any issue with this plugin please submit our forums or contact our support first.</p><p class="description">Your feedback and reviews are most important things to keep our development on track. If you have time please submit us five star <span style="color: orange"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> reviews.</p>
+        <a class="button" href="https://wordpress.org/support/plugin/social-share-button/reviews/" target="_blank">Submit Reviews</a> <a class="button" href="https://wordpress.org/support/plugin/social-share-button/#new-topic-0" target="_blank">Ask wordpress.org</a><p>We spent thousand+ hours to development on this plugin, please submit your reviews wisely.</p><p>If you have any issue with this plugin please submit our forums or contact our support first.</p><p class="description">Your feedback and reviews are most important things to keep our development on track. If you have time please submit us five star <span style="color: orange"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span> reviews.</p>
 
         <?php
 
